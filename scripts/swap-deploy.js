@@ -6,7 +6,9 @@
 // global scope, and execute the script.
 const hre = require('hardhat');
 
-const relayAddress = '';
+const relayAddress = {
+  'onedev':'0x7a01625361c50F5A1f0639f64e5d7766D2475e1C'
+}[hre.network.name];
 
 async function main() {
   const swap = await hre.ethers.deployContract(
@@ -19,6 +21,7 @@ async function main() {
 
   await swap.waitForDeployment();
 
+  //0xB2d10c4e93b2A8D40C73eeb2a3075B3b45dC7a9d
   console.log(`deploy swap to ${swap.target}`);
 }
 
