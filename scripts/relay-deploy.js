@@ -7,17 +7,16 @@
 const hre = require('hardhat');
 
 async function main() {
-  // const relay = await hre.ethers.deployContract('BTCRelay', [], {
-  //   value: 0,
-  // });
-
-  // await relay.waitForDeployment();
-  // console.log(`deploy relay to ${relay.target}`);
-
-  await hre.run("verify:verify", {
-    address: "0x7a01625361c50F5A1f0639f64e5d7766D2475e1C",
+  const relay = await hre.ethers.deployContract('BTCRelay', [], {
+    value: 0,
   });
 
+  await relay.waitForDeployment();
+  console.log(`deploy relay to ${relay.target}`);
+
+  await hre.run('verify:verify', {
+    address: relay.target,
+  });
 }
 
 // We recommend this pattern to be able to use async/await everywhere

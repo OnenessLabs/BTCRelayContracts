@@ -23,6 +23,16 @@ function accounts() {
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   networks: {
+    hardhat: {
+      mining: {
+        auto: false,
+        interval: 1000
+      }
+    },
+    local:{
+      url: "127.0.0.1",
+      accounts: accounts()
+    },
     onedev: {
       url: process.env.NETWORK_ONENESS_DEV,
       accounts: accounts(),

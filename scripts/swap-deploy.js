@@ -7,12 +7,13 @@
 const hre = require('hardhat');
 
 const relayAddress = {
-  'onedev':'0x7a01625361c50F5A1f0639f64e5d7766D2475e1C'
+  onedev: '0x86cc2A8674926b3Ea967080350073C179652032C',
+  one: '',
 }[hre.network.name];
 
 async function main() {
   const swap = await hre.ethers.deployContract(
-    'CrossLightningSwaps',
+    'contracts/SwapContract-dynamic-security-deposit.sol:CrossLightningSwaps',
     [relayAddress],
     {
       value: 0,
@@ -21,8 +22,15 @@ async function main() {
 
   await swap.waitForDeployment();
 
-  //0xB2d10c4e93b2A8D40C73eeb2a3075B3b45dC7a9d
   console.log(`deploy swap to ${swap.target}`);
+
+  //0x7E3099C763AF1130A1c2c5f940FeC76b61766870
+  await hre.run('verify:verify', {
+    address: swap.target,
+    constructorArguments: [
+      relayAddress,
+    ]
+  });
 }
 
 // We recommend this pattern to be able to use async/await everywhere
